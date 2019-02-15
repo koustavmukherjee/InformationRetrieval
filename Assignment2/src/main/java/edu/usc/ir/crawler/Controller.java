@@ -38,11 +38,6 @@ public class Controller {
 		config.setRespectNoIndex(false);
 		config.setFollowRedirects(true);
 		
-		// config.setResumableCrawling(true);
-		// config.setPolitenessDelay(300);
-		/*
-		 * Instantiate the controller for this crawl.
-		 */
 		PageFetcher pageFetcher = new PageFetcher(config);
 		RobotstxtConfig robotstxtConfig = new RobotstxtConfig();
 		RobotstxtServer robotstxtServer = new RobotstxtServer(robotstxtConfig, pageFetcher);
@@ -59,14 +54,7 @@ public class Controller {
 		 * these pages
 		 */
 		controller.addSeed("https://www.theguardian.com/us");
-		// controller.addSeed("https://www.bbc.com/");
-		// controller.addSeed("https://www.theguardian.com/us-news/ng-interactive/2018/oct/03/undefined/assets/lumber.png");
-		/*
-		 * Start the crawl. This is a blocking operation, meaning that your code will
-		 * reach the line after this only when crawling is finished.
-		 */
-		// controller.start(MyCrawler.class, numberOfCrawlers);
-
+		
 		FetchWriterThread fwt = new FetchWriterThread();
 		VisitWriterThread vwt = new VisitWriterThread();
 		UrlsWriterThread uwt = new UrlsWriterThread();
@@ -77,7 +65,7 @@ public class Controller {
 		new Thread(vwt).start();
 		new Thread(uwt).start();
 
-		MyCrawlerControllerFactory factory = new MyCrawlerControllerFactory(fwt, vwt, uwt, config);
+		MyCrawlerControllerFactory factory = new MyCrawlerControllerFactory(fwt, vwt, uwt);
 
 		logger.info("Starting Controller!!");
 

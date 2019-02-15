@@ -9,10 +9,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
-import edu.uci.ics.crawler4j.fetcher.PageFetcher;
 import edu.uci.ics.crawler4j.url.WebURL;
 import edu.usc.ir.crawler.stats.model.Fetch;
 import edu.usc.ir.crawler.stats.model.Urls;
@@ -23,9 +21,6 @@ import edu.usc.ir.crawler.stats.writer.UrlsWriterThread;
 import edu.usc.ir.crawler.stats.writer.VisitWriterThread;
 
 public class MyCrawler extends WebCrawler {
-
-	// private final static Pattern FILTERS =
-	// Pattern.compile(".*(\\.(css|js|gif|jpg" + "|png|mp3|mp3|zip|gz))$");
 	private static final Pattern filters = Pattern.compile(
 			".*(\\.(css|js|mid|mp2|mp3|mp4|wav|avi|mov|mpeg|ram|m4v|xml" + "|rm|smil|wmv|swf|wma|zip|rar|gz))$");
 	private static final Pattern imgPatterns = Pattern.compile(".*(\\.(bmp|gif|jpe?g|png|tiff?))$");
@@ -35,17 +30,12 @@ public class MyCrawler extends WebCrawler {
 	private FetchWriterThread fwt;
 	private VisitWriterThread vwt;
 	private UrlsWriterThread uwt;
-	private CrawlConfig crawlConfig;
-	private PageFetcher pageFetcher;
 
-	public MyCrawler(FetchWriterThread fwt, VisitWriterThread vwt, UrlsWriterThread uwt, CrawlConfig crawlConfig) {
+	public MyCrawler(FetchWriterThread fwt, VisitWriterThread vwt, UrlsWriterThread uwt) {
 		super();
 		this.fwt = fwt;
 		this.vwt = vwt;
 		this.uwt = uwt;
-		//this.pageFetcher = pageFetcher;
-		this.crawlConfig = crawlConfig;
-		this.pageFetcher = new PageFetcher(this.crawlConfig);
 	}
 
 	@Override
@@ -54,7 +44,9 @@ public class MyCrawler extends WebCrawler {
 		String href = url.getURL().toLowerCase();
 		String contentType = "";
 		boolean flag = false;
-		if (url.getSubDomain().equalsIgnoreCase("www") && url.getDomain().equalsIgnoreCase("theguardian.com")) {
+		if (url.getSubDomain().equalsIgnoreCase("www") &&
+			url.getDomain().equalsIgnoreCase("theguardian.com") &&
+			url.getPath().startsWith("us")) {
 			location = Location.OK;
 			flag = true;
 		} else {
@@ -65,44 +57,25 @@ public class MyCrawler extends WebCrawler {
 			return false;
 		} else {
 			try {
-				/*
-				PageFetchResult pageFetcherResult = this.pageFetcher.fetchPage(url);
-				contentType = pageFetcherResult.getEntity() == null ? ""
-						: pageFetcherResult.getEntity().getContentType() == null ? ""
-								: pageFetcherResult.getEntity().getContentType().getValue();
-				*/
-				
-				
+				HttpURLConnection.setFollowRedirects(false);
 				URL uri = new URL(href);
 				HttpURLConnection connection = (HttpURLConnection)  uri.openConnection();
 				connection.setRequestMethod("HEAD");
+				connection.setConnectTimeout(5000);
 				connection.connect();
 				contentType = connection == null ? "" : (connection.getContentType() == null ? "" : connection.getContentType());
 				connection.disconnect();
-				
 			} catch(IOException e) {
 				logger.error(e.getMessage());
 			}
-			/*
-			catch (InterruptedException | IOException | PageBiggerThanMaxSizeException e) {
-				logger.error(e.getMessage());
-			}
-			*/
-
-			// if (href.startsWith("https://www.theguardian.com/")) {
-			// if (href.startsWith("https://www.bbc.com/")) {
 
 			if (!contentType.isEmpty()) {
 				return StringUtils.indexOfAny(contentType,
 						new String[] { 
-								/*
 								"image/gif", 
 								"image/jpeg", 
 								"image/png",
-								*/
-								"image",
 								"application/pdf", 
-								"application/msword", 
 								"text/html" }) > -1;
 			} else {
 				return (imgPatterns.matcher(href).matches() || docPatterns.matcher(href).matches());
