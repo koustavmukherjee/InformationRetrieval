@@ -1,0 +1,26 @@
+Name: $name
+USC ID: $uscid
+News site crawled: $site_crawled
+
+Fetch Statistics
+================
+# fetches attempted: $fetches_attempted
+# fetches succeeded: $fetches_succeeded
+# fetches failed or aborted: $fetches_failed
+
+Outgoing URLs:
+==============
+# Total URLs extracted: $total_urls_extracted
+# unique URLs extracted: $unique_urls_extracted
+# unique URLs within News Site: $unique_urls_within_site
+# unique URLs outside News Site: $unique_urls_outside_site
+
+Status Codes:
+=============
+$status_code_list
+File Sizes:
+===========
+$file_size_list
+Content Types:
+==============
+$content_type_list
