@@ -31,7 +31,7 @@ public class Controller {
 		int numberOfCrawlers = 300;
 		CrawlConfig config = new CrawlConfig();
 		config.setCrawlStorageFolder(crawlStorageFolder);
-		config.setMaxPagesToFetch(1000);
+		config.setMaxPagesToFetch(100);
 		config.setMaxDepthOfCrawling(16);
 		config.setIncludeBinaryContentInCrawling(true);
 		config.setMaxDownloadSize(Integer.MAX_VALUE);

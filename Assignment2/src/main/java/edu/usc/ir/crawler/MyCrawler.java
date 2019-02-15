@@ -44,9 +44,9 @@ public class MyCrawler extends WebCrawler {
 		String href = url.getURL().toLowerCase();
 		String contentType = "";
 		boolean flag = false;
-		if (url.getSubDomain().equalsIgnoreCase("www") &&
+		if ((url.getSubDomain().equalsIgnoreCase("www") || url.getSubDomain().isEmpty()) &&
 			url.getDomain().equalsIgnoreCase("theguardian.com") &&
-			url.getPath().startsWith("us")) {
+			url.getPath().startsWith("/us")) {
 			location = Location.OK;
 			flag = true;
 		} else {
