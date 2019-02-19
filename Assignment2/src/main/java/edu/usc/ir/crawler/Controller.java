@@ -31,12 +31,10 @@ public class Controller {
 		int numberOfCrawlers = 300;
 		CrawlConfig config = new CrawlConfig();
 		config.setCrawlStorageFolder(crawlStorageFolder);
-		config.setMaxPagesToFetch(100);
+		config.setMaxPagesToFetch(20000);
 		config.setMaxDepthOfCrawling(16);
 		config.setIncludeBinaryContentInCrawling(true);
 		config.setMaxDownloadSize(Integer.MAX_VALUE);
-		config.setRespectNoIndex(false);
-		config.setFollowRedirects(true);
 		
 		PageFetcher pageFetcher = new PageFetcher(config);
 		RobotstxtConfig robotstxtConfig = new RobotstxtConfig();

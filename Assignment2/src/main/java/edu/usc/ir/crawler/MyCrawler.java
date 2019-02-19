@@ -57,7 +57,7 @@ public class MyCrawler extends WebCrawler {
 			return false;
 		} else {
 			try {
-				HttpURLConnection.setFollowRedirects(false);
+				HttpURLConnection.setFollowRedirects(true);
 				URL uri = new URL(href);
 				HttpURLConnection connection = (HttpURLConnection)  uri.openConnection();
 				connection.setRequestMethod("HEAD");
