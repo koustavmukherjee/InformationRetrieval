@@ -1,0 +1,76 @@
+/* app css stylesheet */
+
+.menu {
+  list-style: none;
+  border-bottom: 0.1em solid black;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+}
+
+.menu:before {
+  content: "[";
+}
+
+.menu:after {
+  content: "]";
+}
+
+.menu > li {
+  display: inline;
+}
+
+.menu > li + li:before {
+  content: "|";
+  padding-right: 0.3em;
+}
+
+.search{
+  border: none;
+  padding: 10px;
+  margin: 10px;
+  height: 20px;
+  width: 500px;
+  border:1px solid #eaeaea;
+  outline:none;
+  border-radius: 25px;
+  height: 40px;
+  width: 100%;
+}
+input:hover{
+  border-color: #a0a0a0 #b9b9b9 #b9b9b9 #b9b9b9;
+}
+input:focus{
+  border-color:#4d90fe;
+}
+
+.custom_button {
+  border-radius: 2px;
+  background: #f2f2f2;
+  border: 1px solid #f2f2f2;
+  color: #757575;
+  cursor: default;
+  font-size: 14px;
+  /*font-weight: bold;
+  width: 100px;
+  padding: 0 16px;*/
+  height:36px;
+  margin: 5px;
+}
+
+input[type="submit"]:hover {
+  box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+  background: #f8f8f8;
+  border: 1px solid #c6c6c6;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+  color: #222;
+}
+
+.align_center {
+  text-align: center;
+}
+
+.custom-glyphicon {
+  height: 40px;
+  line-height: 40px;
+  color: blue;
+}

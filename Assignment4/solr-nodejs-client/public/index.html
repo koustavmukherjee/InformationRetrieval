@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>SOLR Search Example</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <div ng-controller="main">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+          <!--<input type="text" />-->
+          <div class="form-group has-feedback">
+            <input type="text" class="form-control search" placeholder="" ng-model="search_query"/>
+            <i class="glyphicon glyphicon-search form-control-feedback custom-glyphicon"></i>
+          </div>
+        </div>
+        <div class="col-sm-3"></div>
+      </div>
+      <div class="row align_center">
+        <button type="button" class="btn btn-light custom_button" ng-click="search(true)">Lucene</button>
+        <button type="button" class="btn btn-light custom_button">Page Rank</button>
+        <!--
+        <span class="align_center"><input type="submit" value="Lucene"></span>
+        <span class="align_center"><input type="submit" value="Page Rank"></span>
+        -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <table class="table">
+          <thead>
+          <tr>
+            <th><span class="glyphicon glyphicon-plus" /></th>
+            <th scope="col">#</th>
+            <th scope="col">URL</th>
+          </tr>
+          </thead>
+          <tbody ng-repeat="result in lucene_search_results">
+            <tr>
+              <td><span ng-class="[glyphicon, {'glyphicon-plus': !result.details, 'glyphicon-minus': result.details}]" ng-click="showDetails(result)"/></td>
+              <th scope="row">{{$index + 1}}</th>
+              <td><a ng-href="{{result.og_url[0]}}" target="_blank">{{result.id}}</a></td>
+            </tr>
+            <tr ng-if="result.details">
+              <td colspan="3">
+                <div ng-repeat="(key, value) in result">
+                  <span>{{key}} : {{(key == 'id' || key == '_version_' ? value : value[0])}}
+                  </span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
