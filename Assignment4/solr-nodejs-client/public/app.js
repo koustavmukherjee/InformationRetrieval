@@ -27,9 +27,6 @@ controller('main',function($scope, $http){
       });
     }
   };
-  $scope.showDetails = function(result) {
-    result.details = !result.details;
-  };
 }).
 directive('resultsTable', function() {
   return {
@@ -37,6 +34,11 @@ directive('resultsTable', function() {
     scope: {
       search_results: '=results'
     },
-    templateUrl: 'results-table.html'
+    templateUrl: 'results-table.html',
+    controller: ['$scope', function MyTabsController($scope) {
+      $scope.showDetails = function(result) {
+        result.details = !result.details;
+      };
+    }]
   };
 });
