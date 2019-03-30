@@ -74,3 +74,43 @@ input[type="submit"]:hover {
   line-height: 40px;
   color: blue;
 }
+
+/* Style buttons */
+.custom-btn-1 {
+  /*background-color: DodgerBlue;*/ /* Blue background */
+  background-color: blue;
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  /*padding: 12px 16px;*/ /* Some padding */
+  font-size: 16px; /* Set a font size */
+  cursor: pointer; /* Mouse pointer on hover */
+}
+
+/* Darker background on mouse-over */
+.custom-btn-1:hover, .custom-btn-1:focus {
+  /*background-color: RoyalBlue;*/
+  background-color: darkblue;
+  color: white;
+  border: none;
+}
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  padding: 6px 0px;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.42857;
+}
+
+.btn:focus, btn:active {
+  outline: none;
+}
+
+.custom-table table, .custom-table th, .custom-table td {
+  border: 1px solid black;
+}
+.break-words {
+  word-break: break-all
+}

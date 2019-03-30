@@ -30,4 +30,13 @@ controller('main',function($scope, $http){
   $scope.showDetails = function(result) {
     result.details = !result.details;
   };
+}).
+directive('resultsTable', function() {
+  return {
+    restrict: 'E',
+    scope: {
+      search_results: '=results'
+    },
+    templateUrl: 'results-table.html'
+  };
 });
