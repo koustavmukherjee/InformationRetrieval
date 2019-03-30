@@ -15,10 +15,13 @@ controller('main',function($scope, $http){
       $http({
         url: '/solr/search',
         method: 'GET',
-        params: {query: $scope.search_query}
+        params: {query: $scope.search_query, lucene_based: lucene_based}
       }).then(function success(response) {
         try {
-          $scope.lucene_search_results = response.data.response.docs;
+          if(lucene_based)
+            $scope.lucene_search_results = response.data.response.docs;
+          else
+            $scope.page_rank_search_results = response.data.response.docs;
         } catch(e) {
           console.error(e);
         }
@@ -35,7 +38,8 @@ directive('resultsTable', function() {
       search_results: '=results'
     },
     templateUrl: 'results-table.html',
-    controller: ['$scope', function MyTabsController($scope) {
+    controller: ['$scope', function ResultsTableController($scope) {
+      $scope.isArray = angular.isArray;
       $scope.showDetails = function(result) {
         result.details = !result.details;
       };

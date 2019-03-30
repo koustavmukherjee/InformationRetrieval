@@ -1,7 +1,7 @@
 <div class="row" ng-if="search_results.length > 0">
     <div class="col-sm-12">
         <table class="table table-condensed">
-            <thead>
+            <thead class="thead-light">
             <tr>
                 <th></th>
                 <th scope="col">#</th>
@@ -12,7 +12,7 @@
             <tr>
                 <td><i class="fa" ng-class="{'fa-plus-circle': !result.details, 'fa-minus-circle': result.details}" ng-click="showDetails(result)"></i></td>
                 <th scope="row">{{$index + 1}}</th>
-                <td><a ng-href="{{result.og_url[0]}}" target="_blank" class="break-words">{{result.og_url[0]}}</a></td>
+                <td><a ng-href="{{result.og_url[0]}}" target="_blank" class="break-words">{{result.id}}</a></td>
             </tr>
             <tr ng-if="result.details">
                 <td colspan="3">
@@ -21,7 +21,7 @@
                         <tbody>
                         <tr ng-repeat="(key, value) in result">
                             <th>{{key}}</th>
-                            <td class="break-words">{{(key == 'id' || key == '_version_' ? value : value[0])}}</td>
+                            <td class="break-words">{{isArray(value) ? value[0] : value}}</td>
                         </tr>
                         </tbody>
                     </table>
