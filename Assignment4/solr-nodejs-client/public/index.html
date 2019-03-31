@@ -25,19 +25,27 @@
         </div>
         <div class="col-sm-3"></div>
       </div>
-      <div class="row d-flex justify-content-center">
-        <button type="button" class="btn btn-light custom_button" ng-click="search(true)">Lucene</button>
-        <button type="button" class="btn btn-light custom_button" ng-click="search(false)">Page Rank</button>
-        <button type="button" class="btn btn-light custom_button" ng-click="clear()">Clear</button>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="vertical-center" ng-if="overlaps > 0">
+            <span class="overlap-label">Overlaps: </span><span class="overlap-count">{{overlaps}}</span>
+          </div>
+        </div>
+        <div class="col-sm-6 d-flex justify-content-center">
+          <button type="button" class="btn btn-light custom_button" ng-click="search(true)">Lucene</button>
+          <button type="button" class="btn btn-light custom_button" ng-click="search(false)">Page Rank</button>
+          <button type="button" class="btn btn-light custom_button" ng-click="clear()">Clear</button>
+        </div>
+        <div class="col-sm-3"></div>
       </div>
     </div>
     <div class="container-fluid top_spacing">
       <div class="row">
         <div class="col-sm-6">
-          <results-table results="lucene_search_results"></results-table>
+          <results-table results="lucene_search_results" overlaps="overlaps"></results-table>
         </div>
         <div class="col-sm-6">
-          <results-table results="page_rank_search_results"></results-table>
+          <results-table results="page_rank_search_results" overlaps="overlaps"></results-table>
         </div>
       </div>
     </div>

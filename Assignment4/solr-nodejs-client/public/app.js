@@ -10,18 +10,22 @@ controller('main',function($scope, $http){
   $scope.search_query = undefined;
   $scope.lucene_search_results = {};
   $scope.page_rank_search_results = {};
+  $scope.overlaps = 0;
   let colors = ['#0000FF', '#00FF00', '#FFFF00', '#FF00FF',
                 '#00FFFF', '#800000', '#FF0000', '#008080',
                 '#808080', '#000080'];
   let assignStyle = function(obj1, obj2, color) {
       obj1.style = {"background-color": color};
       obj2.style = {"background-color": color};
+      $scope.overlaps++;
   };
   $scope.clear = function() {
+    $scope.overlaps = 0;
     $scope.lucene_search_results = {};
     $scope.page_rank_search_results = {};
   };
   $scope.search = function(lucene_based) {
+    $scope.overlaps = 0;
     if($scope.search_query) {
       $http({
         url: '/solr/search',
@@ -59,7 +63,8 @@ directive('resultsTable', function() {
   return {
     restrict: 'E',
     scope: {
-      search_results: '=results'
+      search_results: '=results',
+      overlaps: '=overlaps'
     },
     templateUrl: 'results-table.html',
     controller: ['$scope', function ResultsTableController($scope) {

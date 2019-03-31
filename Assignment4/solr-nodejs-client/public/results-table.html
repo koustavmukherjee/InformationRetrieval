@@ -11,7 +11,7 @@
             <tbody ng-repeat="(key, value) in search_results">
             <tr>
                 <td><i class="fa" ng-class="{'fa-plus-circle': !value.details, 'fa-minus-circle': value.details}" ng-click="showDetails(value)"></i></td>
-                <th scope="row" ng-style="value.style">{{$index + 1}}</th>
+                <th scope="row" ng-style="overlaps > 0 ? value.style : ''">{{$index + 1}}</th>
                 <td><a ng-href="{{isArray(value.data.og_url) ? value.data.og_url[0] : value.data.og_url}}" target="_blank" class="break-words">{{value.data.id}}</a></td>
             </tr>
             <tr ng-if="value.details">

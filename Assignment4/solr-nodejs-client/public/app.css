@@ -117,3 +117,20 @@ input[type="submit"]:hover {
 .top_spacing {
   margin-top: 15px;
 }
+
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.overlap-label {
+  font-size: 25px ;
+}
+
+.overlap-count {
+  font-size: 25px;
+  font-weight: bold;
+}
