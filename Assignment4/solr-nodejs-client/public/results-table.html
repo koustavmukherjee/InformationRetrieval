@@ -28,7 +28,7 @@
                         {{isArray(value.data.id) ? value.data.id[0] : value.data.id}}
                     </div>
                     <div class="break-words description">
-                        {{isArray(value.data.description) ? value.data.description[0] : value.data.description}}
+                        {{value.data.description ? (isArray(value.data.description) ? value.data.description[0] : value.data.description) : 'N/A'}}
                     </div>
                 </td>
             </tr>
