@@ -20,7 +20,10 @@ module.exports = function(conf) {
     let rows = 10;
     if(req.query.rows)
       rows = req.query.rows;
-    request({uri: url, method: 'GET', qs:{q:query, start: start_record, rows: rows}}, function(error, response, body){
+    let qs = {q:query, start: start_record, rows: rows, wt: 'json', indent: 'true'};
+    if(!is_lucene_based)
+      qs.sort = 'pagerank desc';
+    request({uri: url, method: 'GET', qs: qs}, function(error, response, body){
       res.status(200).send(body);
     })
   });

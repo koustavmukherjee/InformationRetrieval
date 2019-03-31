@@ -141,3 +141,49 @@ input[type="submit"]:hover {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.url {
+  text-decoration: none;
+  color: green !important;
+  font-size: 14px;
+  font-style: oblique;
+}
+
+.title {
+  font-weight: bold;
+}
+
+.id {
+  font-style: italic;
+  color: dimgrey;
+}
+
+.description {
+  margin-top: 2px;
+}
+
+.lucene-search-title {
+  color:blue !important;
+  text-align: center;
+}
+
+.page-rank-search-title {
+  color: red !important;
+  text-align: center;
+}
+
+.blue {
+  color: blue;
+}
+
+.red {
+  color: red;
+}
+
+.blue:hover {
+  color:blue;
+}
+
+.red:hover {
+  color:red;
+}

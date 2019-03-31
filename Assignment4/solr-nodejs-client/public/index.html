@@ -17,71 +17,92 @@
   <div ng-controller="main" ng-cloak>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-3">
-          <div class="vertical-center" ng-if="overlaps > 0">
+        <div class="col-sm-3" ng-cloak>
+          <div class="vertical-center" ng-show="overlaps > 0" ng-cloak>
             <span class="overlap-label">Overlaps: </span><span class="overlap-count">{{overlaps}}</span>
           </div>
         </div>
         <div class="col-sm-6">
           <div class="form-group has-feedback">
-            <input type="text" class="form-control search" placeholder="" ng-model="search_query"/>
+            <input type="text" class="form-control search" placeholder="Enter Search Term..." ng-model="search_query"/>
           </div>
         </div>
         <div class="col-sm-3"></div>
       </div>
+
       <div class="row">
-        <div class="col-sm-5 overlap-label">
-          <span ng-if="lucene_search_term !== undefined">Lucene Based Search Result</span>
+        <div class="col-sm-4 overlap-label">
         </div>
-        <div class="col-sm-2 d-flex justify-content-center">
+        <div class="col-sm-4 d-flex justify-content-center">
           <button type="button" class="btn btn-light custom_button" ng-click="search(true)">Lucene</button>
           <button type="button" class="btn btn-light custom_button" ng-click="search(false)">Page Rank</button>
           <button type="button" class="btn btn-light custom_button" ng-click="clear()">Clear</button>
         </div>
-        <div class="col-sm-5 overlap-label">
-          <span ng-if="page_rank_search_term !== undefined">Page Rank Based Search Result</span>
+        <div class="col-sm-4 overlap-label">
         </div>
       </div>
+
       <div class="row">
-        <div class="col-sm-2 limit-text" ng-if="lucene_search_term !== undefined">
-          <span class="overlap-label">Term: </span><span class="overlap-count">{{lucene_search_term}}</span>
+        <div class="col-sm-6">
+          <div class="row">
+            <div class="col-sm-6 limit-text">
+              <span class="overlap-label" ng-show="lucene_search_term !== undefined">Term: </span><span class="overlap-count blue">{{lucene_search_term}}</span>
+            </div>
+            <div class="col-sm-6 limit-text">
+              <span class="overlap-label" ng-show="total_lucene_results > 0">Result: </span>
+              <span class="overlap-count blue" ng-show="total_lucene_results > 0">
+                {{(total_lucene_results < (lucene_start + 1) ? total_lucene_results : (lucene_start + 1)) +
+                ' - ' +
+                (total_lucene_results < (lucene_start + lucene_rows) ? total_lucene_results : (lucene_start + lucene_rows)) +
+                ' of ' +
+                (total_lucene_results)}}
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <results-table results="lucene_search_results" overlaps="overlaps" algo-desc="LUCENE BASED"></results-table>
+            </div>
+          </div>
         </div>
-        <div class="col-sm-3 limit-text" ng-if="total_lucene_results > 0">
-          <span class="overlap-label">Result: </span>
-          <span class="overlap-count">
-            {{(total_lucene_results < (lucene_start + 1) ? total_lucene_results : (lucene_start + 1)) +
-            ' - ' +
-            (total_lucene_results < (lucene_start + lucene_rows) ? total_lucene_results : (lucene_start + lucene_rows)) +
-            ' of ' +
-            (total_lucene_results)}}
-          </span>
-        </div>
-        <div class="col-sm-2"></div>
-        <div class="col-sm-2 limit-text" ng-if="page_rank_search_term !== undefined">
-          <span class="overlap-label">Term: </span><span class="overlap-count">{{page_rank_search_term}}</span>
-        </div>
-        <div class="col-sm-3 limit-text" ng-if="total_page_rank_results > 0">
-          <span class="overlap-label">Result: </span>
-          <span class="overlap-count">
-            {{(total_page_rank_results < (page_rank_start + 1) ? total_page_rank_results : (page_rank_start + 1)) +
-            ' - ' +
-            (total_page_rank_results < (page_rank_start + page_rank_rows) ? total_page_rank_results : (page_rank_start + page_rank_rows)) +
-            ' of ' +
-            total_page_rank_results}}
-          </span>
-        </div>
+        <div class="col-sm-6">
+          <div class="row">
+            <div class="col-sm-6 limit-text">
+              <span class="overlap-label" ng-show="page_rank_search_term !== undefined">Term: </span>
+              <span class="overlap-count red">
+                {{page_rank_search_term}}
+              </span>
+            </div>
+            <div class="col-sm-6 limit-text">
+              <span class="overlap-label" ng-show="total_page_rank_results > 0">Result: </span>
+              <span class="overlap-count red" ng-show="total_page_rank_results > 0">
+                {{(total_page_rank_results < (page_rank_start + 1) ? total_page_rank_results : (page_rank_start + 1)) +
+                ' - ' +
+                (total_page_rank_results < (page_rank_start + page_rank_rows) ? total_page_rank_results : (page_rank_start + page_rank_rows)) +
+                ' of ' +
+                total_page_rank_results}}
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <results-table results="page_rank_search_results" overlaps="overlaps" algo-desc="PAGE RANK BASED"></results-table>
+            </div>
+          </div>
       </div>
     </div>
+    <!--
     <div class="container-fluid top_spacing">
       <div class="row">
         <div class="col-sm-6">
-          <results-table results="lucene_search_results" overlaps="overlaps"></results-table>
+          <results-table results="lucene_search_results" overlaps="overlaps" algo-desc="LUCENE BASED"></results-table>
         </div>
         <div class="col-sm-6">
-          <results-table results="page_rank_search_results" overlaps="overlaps"></results-table>
+          <results-table results="page_rank_search_results" overlaps="overlaps" algo-desc="PAGE RANK BASED"></results-table>
         </div>
       </div>
     </div>
+    -->
   </div>
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>

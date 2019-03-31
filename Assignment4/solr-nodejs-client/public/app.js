@@ -24,6 +24,9 @@ controller('main',function($scope, $http){
 
   $scope.undefined = undefined;
 
+  $scope.lucene_algo_desc = 'LUCENE BASED';
+  $scope.page_rank_algo_desc = 'PAGE RANK BASED';
+
   let colors = ['#0000FF', '#00FF00', '#FFFF00', '#FF00FF',
                 '#00FFFF', '#800000', '#FF0000', '#008080',
                 '#808080', '#000080'];
@@ -108,7 +111,8 @@ directive('resultsTable', function() {
     restrict: 'E',
     scope: {
       search_results: '=results',
-      overlaps: '=overlaps'
+      overlaps: '=overlaps',
+      algo_desc: '@algoDesc'
     },
     templateUrl: 'results-table.html',
     controller: ['$scope', function ResultsTableController($scope) {
