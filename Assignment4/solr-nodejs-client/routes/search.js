@@ -14,7 +14,13 @@ module.exports = function(conf) {
     const url = conf.get('SOLR_PROTOCOL') + "://" + conf.get('SOLR_HOST') + ':' +
                 conf.get('SOLR_PORT') + '/solr/' + core + '/select';
     const query = req.query.query;
-    request({uri: url, method: 'GET', qs:{q:query}}, function(error, response, body){
+    let start_record = 0;
+    if(req.query.start)
+      start_record = req.query.start;
+    let rows = 10;
+    if(req.query.rows)
+      rows = req.query.rows;
+    request({uri: url, method: 'GET', qs:{q:query, start: start_record, rows: rows}}, function(error, response, body){
       res.status(200).send(body);
     })
   });

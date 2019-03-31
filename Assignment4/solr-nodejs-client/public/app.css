@@ -128,9 +128,16 @@ input[type="submit"]:hover {
 
 .overlap-label {
   font-size: 25px ;
+  font-style: oblique;
 }
 
 .overlap-count {
   font-size: 25px;
   font-weight: bold;
+}
+
+.limit-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

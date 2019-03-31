@@ -17,7 +17,11 @@
   <div ng-controller="main" ng-cloak>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-3"></div>
+        <div class="col-sm-3">
+          <div class="vertical-center" ng-if="overlaps > 0">
+            <span class="overlap-label">Overlaps: </span><span class="overlap-count">{{overlaps}}</span>
+          </div>
+        </div>
         <div class="col-sm-6">
           <div class="form-group has-feedback">
             <input type="text" class="form-control search" placeholder="" ng-model="search_query"/>
@@ -26,17 +30,46 @@
         <div class="col-sm-3"></div>
       </div>
       <div class="row">
-        <div class="col-sm-3">
-          <div class="vertical-center" ng-if="overlaps > 0">
-            <span class="overlap-label">Overlaps: </span><span class="overlap-count">{{overlaps}}</span>
-          </div>
+        <div class="col-sm-5 overlap-label">
+          <span ng-if="lucene_search_term !== undefined">Lucene Based Search Result</span>
         </div>
-        <div class="col-sm-6 d-flex justify-content-center">
+        <div class="col-sm-2 d-flex justify-content-center">
           <button type="button" class="btn btn-light custom_button" ng-click="search(true)">Lucene</button>
           <button type="button" class="btn btn-light custom_button" ng-click="search(false)">Page Rank</button>
           <button type="button" class="btn btn-light custom_button" ng-click="clear()">Clear</button>
         </div>
-        <div class="col-sm-3"></div>
+        <div class="col-sm-5 overlap-label">
+          <span ng-if="page_rank_search_term !== undefined">Page Rank Based Search Result</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2 limit-text" ng-if="lucene_search_term !== undefined">
+          <span class="overlap-label">Term: </span><span class="overlap-count">{{lucene_search_term}}</span>
+        </div>
+        <div class="col-sm-3 limit-text" ng-if="total_lucene_results > 0">
+          <span class="overlap-label">Result: </span>
+          <span class="overlap-count">
+            {{(total_lucene_results < (lucene_start + 1) ? total_lucene_results : (lucene_start + 1)) +
+            ' - ' +
+            (total_lucene_results < (lucene_start + lucene_rows) ? total_lucene_results : (lucene_start + lucene_rows)) +
+            ' of ' +
+            (total_lucene_results)}}
+          </span>
+        </div>
+        <div class="col-sm-2"></div>
+        <div class="col-sm-2 limit-text" ng-if="page_rank_search_term !== undefined">
+          <span class="overlap-label">Term: </span><span class="overlap-count">{{page_rank_search_term}}</span>
+        </div>
+        <div class="col-sm-3 limit-text" ng-if="total_page_rank_results > 0">
+          <span class="overlap-label">Result: </span>
+          <span class="overlap-count">
+            {{(total_page_rank_results < (page_rank_start + 1) ? total_page_rank_results : (page_rank_start + 1)) +
+            ' - ' +
+            (total_page_rank_results < (page_rank_start + page_rank_rows) ? total_page_rank_results : (page_rank_start + page_rank_rows)) +
+            ' of ' +
+            total_page_rank_results}}
+          </span>
+        </div>
       </div>
     </div>
     <div class="container-fluid top_spacing">
