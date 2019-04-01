@@ -56,7 +56,7 @@ public class CreateEdgeList {
 			Document doc = Jsoup.parse(file, "UTF-8", fileUrlMap.get(file.getName()));
 			Elements links = doc.select("a[href]");
 			for (Element link : links) {
-				String url = link.attr("href").trim();
+				String url = link.attr("abs:href").trim();
 				if (urlFileMap.containsKey(url)) {
 					edges.add(file.getName() + " " + urlFileMap.get(url));
 				}
