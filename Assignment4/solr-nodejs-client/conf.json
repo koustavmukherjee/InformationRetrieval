@@ -2,6 +2,5 @@
     "SOLR_PROTOCOL": "http",
     "SOLR_HOST": "localhost",
     "SOLR_PORT": "8983",
-    "SOLR_LUCENE_RANKED_CORE_NAME": "lucene_ranked_core",
-    "SOLR_PAGE_RANKED_CORE_NAME": "page_ranked_core"
+    "SOLR_CORE_NAME": "search_core"
 }

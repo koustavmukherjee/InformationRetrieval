@@ -8,11 +8,8 @@ module.exports = function(conf) {
     if(req.query.lucene_based !== undefined) {
       is_lucene_based = req.query.lucene_based === 'true' ? true : false;
     }
-    let core = conf.get('SOLR_LUCENE_RANKED_CORE_NAME');
-    if(!is_lucene_based)
-      core = conf.get('SOLR_PAGE_RANKED_CORE_NAME');
     const url = conf.get('SOLR_PROTOCOL') + "://" + conf.get('SOLR_HOST') + ':' +
-                conf.get('SOLR_PORT') + '/solr/' + core + '/select';
+                conf.get('SOLR_PORT') + '/solr/' + conf.get("SOLR_CORE_NAME") + '/select';
     const query = req.query.query;
     let start_record = 0;
     if(req.query.start)
