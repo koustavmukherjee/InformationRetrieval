@@ -1,12 +1,13 @@
 'use strict';
 
 // Declare app level module which depends on views, and core components
-angular.module('myApp', [
-]).
-config(['$locationProvider', function($locationProvider) {
+let searchApp = angular.module('searchApp', []);
+
+searchApp.config(['$locationProvider', function($locationProvider) {
   $locationProvider.hashPrefix('!');
-}]).
-controller('main',function($scope, $http){
+}]);
+
+searchApp.controller('main',function($scope, $http, initializationData){
   $scope.search_query = undefined;
   $scope.lucene_search_results = {};
   $scope.page_rank_search_results = {};
@@ -81,6 +82,9 @@ controller('main',function($scope, $http){
           let resultsObj = {};
           for(let i = 0; i < results.length; i++) {
             resultsObj[results[i].id] = {};
+            let og_url = angular.isArray(results[i].og_url) ? results[i].og_url[0] : results[i].og_url;
+            if(!og_url)
+              results[i].og_url = initializationData[results[i].id.split('/').pop()];
             resultsObj[results[i].id]['data'] = results[i];
             if(lucene_based && $scope.page_rank_search_results[results[i].id]) {
               assignStyle(resultsObj[results[i].id], $scope.page_rank_search_results[results[i].id], colors[i % colors.length])
@@ -105,8 +109,9 @@ controller('main',function($scope, $http){
       });
     }
   };
-}).
-directive('resultsTable', function() {
+});
+
+searchApp.directive('resultsTable', function() {
   return {
     restrict: 'E',
     scope: {
@@ -125,4 +130,24 @@ directive('resultsTable', function() {
       };
     }]
   };
+});
+
+let loadPreAppInitializationData = function() {
+  const initInjector = angular.injector(["ng"]);
+  const $http = initInjector.get("$http");
+
+  return $http.get("/data").then(
+      function(response) {
+        searchApp.constant("initializationData", response.data);
+      },
+      function(errorResponse) {
+
+      }
+  );
+};
+
+loadPreAppInitializationData().then(function() {
+  angular.element(document).ready(function() {
+    angular.bootstrap(document, ["searchApp"]);
+  });
 });
