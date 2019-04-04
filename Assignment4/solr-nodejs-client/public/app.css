@@ -187,3 +187,11 @@ input[type="submit"]:hover {
 .red:hover {
   color:red;
 }
+
+.display {
+  display: contents !important;
+}
+
+.nodisplay {
+  display: none !important;
+}

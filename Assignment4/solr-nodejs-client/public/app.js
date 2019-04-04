@@ -8,6 +8,7 @@ searchApp.config(['$locationProvider', function($locationProvider) {
 }]);
 
 searchApp.controller('main',function($scope, $http, initializationData){
+  $scope.undefined = undefined;
   $scope.search_query = undefined;
   $scope.lucene_search_results = {};
   $scope.page_rank_search_results = {};

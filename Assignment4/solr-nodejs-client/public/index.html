@@ -17,8 +17,8 @@
   <div ng-controller="main" ng-cloak>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-3" ng-cloak>
-          <div class="vertical-center" ng-show="overlaps > 0" ng-cloak>
+        <div class="col-sm-3" class="ng-cloak">
+          <div class="vertical-center" ng-show="overlaps > 0" ng-cloak style="display: none" ng-class="{'display': overlaps > 0, 'nodisplay': overlaps == 0}">
             <span class="overlap-label">Overlaps: </span><span class="overlap-count">{{overlaps}}</span>
           </div>
         </div>
@@ -46,11 +46,27 @@
         <div class="col-sm-6">
           <div class="row">
             <div class="col-sm-6 limit-text">
-              <span class="overlap-label" ng-show="lucene_search_term !== undefined">Term: </span><span class="overlap-count blue">{{lucene_search_term}}</span>
+              <span class="overlap-label"
+                    style="display: none"
+                    ng-show="lucene_search_term !== undefined"
+                    ng-class="{'display': lucene_search_term !== undefined, 'nodisplay': lucene_search_term == undefined}">
+                Term:
+              </span>
+              <span class="overlap-count blue"
+                    style="display: none"
+                    ng-class="{'display': lucene_search_term !== undefined, 'nodisplay': lucene_search_term == undefined}">
+                {{lucene_search_term}}
+              </span>
             </div>
             <div class="col-sm-6 limit-text">
-              <span class="overlap-label" ng-show="total_lucene_results > 0">Result: </span>
-              <span class="overlap-count blue" ng-show="total_lucene_results > 0">
+              <span class="overlap-label"
+                    style="display: none"
+                    ng-show="total_lucene_results > 0"
+                    ng-class="{'display': total_lucene_results > 0, 'nodisplay': total_lucene_results == 0}">Result: </span>
+              <span class="overlap-count blue"
+                    style="display: none"
+                    ng-show="total_lucene_results > 0"
+                    ng-class="{'display': total_lucene_results > 0, 'nodisplay': total_lucene_results == 0}">
                 {{(total_lucene_results < (lucene_start + 1) ? total_lucene_results : (lucene_start + 1)) +
                 ' - ' +
                 (total_lucene_results < (lucene_start + lucene_rows) ? total_lucene_results : (lucene_start + lucene_rows)) +
@@ -68,14 +84,30 @@
         <div class="col-sm-6">
           <div class="row">
             <div class="col-sm-6 limit-text">
-              <span class="overlap-label" ng-show="page_rank_search_term !== undefined">Term: </span>
-              <span class="overlap-count red">
+              <span class="overlap-label"
+                    style="display: none"
+                    ng-show="lucene_search_term !== undefined"
+                    ng-class="{'display': page_rank_search_term !== undefined, 'nodisplay': page_rank_search_term == undefined}">
+                Term:
+              </span>
+              <span class="overlap-count red"
+                    style="display: none"
+                    ng-show="lucene_search_term !== undefined"
+                    ng-class="{'display': page_rank_search_term !== undefined, 'nodisplay': page_rank_search_term == undefined}">
                 {{page_rank_search_term}}
               </span>
             </div>
             <div class="col-sm-6 limit-text">
-              <span class="overlap-label" ng-show="total_page_rank_results > 0">Result: </span>
-              <span class="overlap-count red" ng-show="total_page_rank_results > 0">
+              <span class="overlap-label"
+                    style="display: none"
+                    ng-show="total_page_rank_results > 0"
+                    ng-class="{'display': total_page_rank_results > 0, 'nodisplay': total_page_rank_results == 0}">
+                Result:
+              </span>
+              <span class="overlap-count red"
+                    style="display: none"
+                    ng-show="total_page_rank_results > 0"
+                    ng-class="{'display': total_page_rank_results > 0, 'nodisplay': total_page_rank_results == 0}">
                 {{(total_page_rank_results < (page_rank_start + 1) ? total_page_rank_results : (page_rank_start + 1)) +
                 ' - ' +
                 (total_page_rank_results < (page_rank_start + page_rank_rows) ? total_page_rank_results : (page_rank_start + page_rank_rows)) +
