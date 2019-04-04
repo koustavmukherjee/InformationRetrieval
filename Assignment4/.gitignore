@@ -1,0 +1,6 @@
+/target/
+.settings/
+.classpath
+.project
+solr-nodejs-client/.idea/
+solr-nodejs-client/node_modules/
