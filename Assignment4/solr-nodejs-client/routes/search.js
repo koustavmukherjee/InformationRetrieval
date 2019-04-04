@@ -1,3 +1,4 @@
+"use strict";
 module.exports = function(conf) {
   const express = require('express');
   const router = express.Router();
