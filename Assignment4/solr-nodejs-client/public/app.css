@@ -195,3 +195,20 @@ input[type="submit"]:hover {
 .nodisplay {
   display: none !important;
 }
+
+.has-search .form-control {
+  padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.45rem;
+  height: 2.45rem;
+  line-height: 2.45rem;
+  text-align: center;
+  pointer-events: none;
+  margin-left: 0.7rem;
+  color: blue;
+}
