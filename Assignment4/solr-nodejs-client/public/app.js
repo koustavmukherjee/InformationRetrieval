@@ -90,13 +90,8 @@ searchApp.controller('main',function($scope, $http, initializationData){
   $scope.onKeyPress = function($event) {
     let keyCode = $event.which;
     if (keyCode === 13) {
-      if(Object.keys($scope.lucene_search_results).length == 0)
-        $scope.search(true);
-      else if(Object.keys($scope.page_rank_search_results).length == 0)
-        $scope.search(false);
-      else {
-        $scope.clear();
-      }
+      $scope.search(true);
+      $scope.search(false);
     }
   };
 
