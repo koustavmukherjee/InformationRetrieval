@@ -173,19 +173,19 @@ input[type="submit"]:hover {
 }
 
 .blue {
-  color: blue;
+  color: blue !important;
 }
 
 .red {
-  color: red;
+  color: red !important;
 }
 
 .blue:hover {
-  color:blue;
+  color:blue !important;
 }
 
 .red:hover {
-  color:red;
+  color:red !important;
 }
 
 .display {

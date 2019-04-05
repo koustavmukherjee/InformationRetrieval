@@ -20,9 +20,14 @@ module.exports = function(conf) {
       rows = req.query.rows;
     let qs = {q:query, start: start_record, rows: rows, wt: 'json', indent: 'true'};
     if(!is_lucene_based)
-      qs.sort = 'pagerank desc';
+      qs.sort = conf.get('PAGE_RANK_FILE_NAME') + ' ' + conf.get('PAGE_RANK_ORDER');
     request({uri: url, method: 'GET', qs: qs}, function(error, response, body){
-      res.status(200).send(body);
+      if(error) {
+        res.status(500).send(error);
+      }
+      else {
+        res.status(response.statusCode).send(body);
+      }
     })
   });
   return router;

@@ -12,6 +12,7 @@ searchApp.controller('main',function($scope, $http, initializationData){
   $scope.search_query = undefined;
   $scope.lucene_search_results = {};
   $scope.page_rank_search_results = {};
+  $scope.toastMessage = '';
 
   $scope.overlaps = 0;
   let overlap_lucene = {};
@@ -31,6 +32,8 @@ searchApp.controller('main',function($scope, $http, initializationData){
 
   $scope.lucene_algo_desc = 'LUCENE BASED';
   $scope.page_rank_algo_desc = 'PAGE RANK BASED';
+
+  $('.toast').toast({delay: 4000});
 
   let colors = ['#0000FF', '#00FF00', '#FFFF00', '#FF00FF',
                 '#00FFFF', '#800000', '#FF0000', '#008080',
@@ -67,7 +70,6 @@ searchApp.controller('main',function($scope, $http, initializationData){
   };
 
   $scope.clear = function() {
-    $scope.search_query = undefined;
 
     $scope.overlaps = 0;
     overlap_lucene = {};
@@ -85,11 +87,13 @@ searchApp.controller('main',function($scope, $http, initializationData){
     $scope.page_rank_rows = 10;
     $scope.page_rank_search_term = undefined;
     $scope.total_page_rank_results = 0;
+    $scope.toastMessage = '';
   };
 
   $scope.onKeyPress = function($event) {
     let keyCode = $event.which;
     if (keyCode === 13) {
+      $scope.clear();
       $scope.search(true);
       $scope.search(false);
     }
@@ -147,10 +151,12 @@ searchApp.controller('main',function($scope, $http, initializationData){
             $scope.total_page_rank_results = response.data.response.numFound;
           }
         } catch(e) {
-          console.error(e);
+          $scope.toastMessage = e.name + ': ' + e.message;
+          $('.toast').toast('show');
         }
       }, function error(response) {
-        console.error(response);
+        $scope.toastMessage = response.data.error.msg;
+        $('.toast').toast('show');
       });
     }
   };
@@ -186,7 +192,7 @@ let loadPreAppInitializationData = function() {
         searchApp.constant("initializationData", response.data);
       },
       function(errorResponse) {
-
+        searchApp.constant("initializationData", {});
       }
   );
 };
