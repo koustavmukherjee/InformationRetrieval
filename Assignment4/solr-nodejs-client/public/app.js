@@ -39,10 +39,6 @@ searchApp.controller('main',function($scope, $http, initializationData){
   $scope.display_type = {};
   $scope.display_type.value = true;
 
-  $scope.onDisplayTypeChange = function() {
-    console.log($scope.display_type.value);
-  };
-
   let colors = ['#0000FF', '#00FF00', '#FFFF00', '#FF00FF',
                 '#00FFFF', '#800000', '#FF0000', '#008080',
                 '#808080', '#000080'];
@@ -105,10 +101,17 @@ searchApp.controller('main',function($scope, $http, initializationData){
       $scope.clear();
       $scope.search(true);
       $scope.search(false);
-      console.log($scope.urls_table.length);
     }
   };
-
+  let clearUrlsTable = function(arr, key) {
+    for(let i = 0; i < arr.length; i++) {
+      delete arr[i][key];
+      if(!arr[i].lucene && !arr[i].page_rank) {
+        arr.splice(i, 1);
+        i--;
+      }
+    }
+  };
   $scope.search = function(lucene_based) {
     $scope.overlaps = 0;
     let params = {};
@@ -138,6 +141,12 @@ searchApp.controller('main',function($scope, $http, initializationData){
         try {
           let results = response.data.response.docs;
           let resultsObj = {};
+          if(lucene_based) {
+            clearUrlsTable($scope.urls_table, 'lucene');
+          }
+          else {
+            clearUrlsTable($scope.urls_table, 'page_rank');
+          }
           for(let i = 0; i < results.length; i++) {
             resultsObj[results[i].id] = {};
             let og_url = angular.isArray(results[i].og_url) ? results[i].og_url[0] : results[i].og_url;
