@@ -35,6 +35,14 @@ searchApp.controller('main',function($scope, $http, initializationData){
 
   $('.toast').toast({delay: 4000});
 
+  $scope.urls_table = [];
+  $scope.display_type = {};
+  $scope.display_type.value = true;
+
+  $scope.onDisplayTypeChange = function() {
+    console.log($scope.display_type.value);
+  };
+
   let colors = ['#0000FF', '#00FF00', '#FFFF00', '#FF00FF',
                 '#00FFFF', '#800000', '#FF0000', '#008080',
                 '#808080', '#000080'];
@@ -88,6 +96,7 @@ searchApp.controller('main',function($scope, $http, initializationData){
     $scope.page_rank_search_term = undefined;
     $scope.total_page_rank_results = 0;
     $scope.toastMessage = '';
+    $scope.urls_table = [];
   };
 
   $scope.onKeyPress = function($event) {
@@ -96,6 +105,7 @@ searchApp.controller('main',function($scope, $http, initializationData){
       $scope.clear();
       $scope.search(true);
       $scope.search(false);
+      console.log($scope.urls_table.length);
     }
   };
 
@@ -136,9 +146,15 @@ searchApp.controller('main',function($scope, $http, initializationData){
             resultsObj[results[i].id]['data'] = results[i];
 
             if(lucene_based) {
+              if(!$scope.urls_table[i])
+                $scope.urls_table[i] = {};
+              $scope.urls_table[i].lucene = og_url;
               assignStyle(overlap_lucene, overlap_page_rank, results[i].og_url, results[i].id, resultsObj, $scope.page_rank_search_results, colors[i % colors.length]);
             }
             else {
+              if(!$scope.urls_table[i])
+                $scope.urls_table[i] = {};
+              $scope.urls_table[i].page_rank = og_url;
               assignStyle(overlap_page_rank, overlap_lucene, results[i].og_url, results[i].id, resultsObj, $scope.lucene_search_results, colors[i % colors.length]);
             }
           }
@@ -151,6 +167,7 @@ searchApp.controller('main',function($scope, $http, initializationData){
             $scope.total_page_rank_results = response.data.response.numFound;
           }
         } catch(e) {
+          console.error(e);
           $scope.toastMessage = e.name + ': ' + e.message;
           $('.toast').toast('show');
         }
@@ -179,6 +196,19 @@ searchApp.directive('resultsTable', function() {
       $scope.showDetails = function(result) {
         result.details = !result.details;
       };
+    }]
+  };
+});
+
+searchApp.directive('urlsTable', function() {
+  return {
+    restrict: 'E',
+    scope: {
+      urls_table: '=urlsTable',
+    },
+    templateUrl: 'urls-table.html',
+    controller: ['$scope', function UrlsTableController($scope) {
+
     }]
   };
 });

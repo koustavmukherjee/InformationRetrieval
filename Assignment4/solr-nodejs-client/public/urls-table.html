@@ -1,0 +1,12 @@
+<table class="table table-bordered" ng-show="urls_table.length > 0" ng-cloak>
+    <thead class="thead-light">
+        <th class="break-words lucene-search-title" style="width: 50%">LUCENE BASED</th>
+        <th class="break-words page-rank-search-title" style="width: 50%">PAGE RANK BASED</th>
+    </thead>
+    <tbody>
+        <tr ng-repeat="entry in urls_table">
+            <td class="break-words"> <a class="url blue" ng-href="{{entry.lucene}}" target="_blank">{{entry.lucene}}</a></td>
+            <td class="break-words"> <a class="url red" ng-href="{{entry.page_rank}}" target="_blank">{{entry.page_rank}}</a></td>
+        </tr>
+    </tbody>
+</table>
