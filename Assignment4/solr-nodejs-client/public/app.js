@@ -170,10 +170,14 @@ searchApp.controller('main',function($scope, $http, initializationData){
           if(lucene_based) {
             $scope.lucene_search_results = resultsObj;
             $scope.total_lucene_results = response.data.response.numFound;
+            $scope.lucene_start = response.data.response.start;
+            $scope.lucene_rows = response.data.response.docs.length;
           }
           else {
             $scope.page_rank_search_results = resultsObj;
             $scope.total_page_rank_results = response.data.response.numFound;
+            $scope.page_rank_start = response.data.response.start;
+            $scope.page_rank_rows = response.data.response.docs.length;
           }
         } catch(e) {
           console.error(e);
