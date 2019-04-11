@@ -13,11 +13,11 @@ module.exports = function(conf) {
                 conf.get('SOLR_PORT') + '/solr/' + conf.get("SOLR_CORE_NAME") + '/select';
     const query = req.query.query;
     let start_record = 0;
-    if(req.query.start)
-      start_record = req.query.start;
+    if(conf.get('SOLR_START'))
+      start_record = conf.get('SOLR_START');
     let rows = 10;
-    if(req.query.rows)
-      rows = req.query.rows;
+    if(conf.get('SOLR_ROWS'))
+      rows = conf.get('SOLR_ROWS');
     let qs = {q:query, start: start_record, rows: rows, wt: 'json', indent: 'true'};
     if(!is_lucene_based)
       qs.sort = conf.get('PAGE_RANK_FILE_NAME') + ' ' + conf.get('PAGE_RANK_ORDER');
