@@ -11,7 +11,7 @@ The configuration property keys, default values and a description of what they d
 |SOLR_HOST   |localhost   |The IP address of Solr instance   |
 |SOLR_PORT   |8983   |The port of Solr instance. It is just for the purposes of establishing a connection to Solr from "nodejs", not for launching a Solr instance on a different port.   |
 |SOLR_CORE_NAME   |search_core   |The Solr core on which page ranking has been configured and is used for connect to it from nodejs   |
-|SOLR_START   |0   |The starting offsset of the result set, passed as a query parameter to Solr   |
+|SOLR_START   |0   |The starting offset of the result set, passed as a query parameter to Solr   |
 |SOLR_ROWS   |10   |The maximum number of records to fetch at a time, used for pagination and passed as a query parameter to Solr   |
 |PORT   |3000   | The port to launch "nodejs"  |
 |PAGE_RANK_FILE_NAME   |pageRankFile   |The filename that contains the page ranks for the "Page Rank" based sorting scheme   |
