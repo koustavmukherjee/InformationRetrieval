@@ -1,0 +1,51 @@
+<div class="row" ng-if="!isObjectEmpty(search_results)">
+    <div class="col-sm-12">
+        <table class="table table-borderless">
+            <thead class="thead-light">
+            <tr>
+                <th colspan="3" scope="col" ng-class="{'lucene-search-title':algo_desc === 'LUCENE BASED', 'page-rank-search-title':algo_desc === 'PAGE RANK BASED'}">
+                    {{algo_desc + ' SEARCH RESULTS' }}
+                </th>
+            </tr>
+            </thead>
+            <tbody ng-repeat="(key, value) in search_results">
+            <tr>
+                <td><i class="fa" ng-class="{'fa-plus-circle': !value.details, 'fa-minus-circle': value.details}" ng-click="showDetails(value)"></i></td>
+                <th scope="row" ng-style="overlaps > 0 ? value.style : ''">{{$index + 1}}</th>
+                <td>
+                    <div class="break-words">
+                        <a ng-href="{{isArray(value.data.og_url) ? value.data.og_url[0] : value.data.og_url}}" target="_blank" class="title"
+                           ng-class="{'blue':algo_desc === 'LUCENE BASED', 'red':algo_desc === 'PAGE RANK BASED'}">
+                            {{isArray(value.data.title) ? value.data.title[0] : value.data.title}}
+                        </a>
+                    </div>
+                    <div class="break-words">
+                        <a ng-href="{{isArray(value.data.og_url) ? value.data.og_url[0] : value.data.og_url}}" target="_blank" class="url">
+                            {{isArray(value.data.og_url) ? value.data.og_url[0] : value.data.og_url}}
+                        </a>
+                    </div>
+                    <div class="break-words id">
+                        {{isArray(value.data.id) ? value.data.id[0] : value.data.id}}
+                    </div>
+                    <div class="break-words description">
+                        {{value.data.description ? (isArray(value.data.description) ? value.data.description[0] : value.data.description) : 'N/A'}}
+                    </div>
+                </td>
+            </tr>
+            <tr ng-if="value.details">
+                <td colspan="3">
+                    <table class="custom-table">
+                        <thead></thead>
+                        <tbody>
+                        <tr ng-repeat="(key1, value1) in value.data">
+                            <th>{{key1}}</th>
+                            <td class="break-words">{{isArray(value1) ? value1[0] : value1}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
