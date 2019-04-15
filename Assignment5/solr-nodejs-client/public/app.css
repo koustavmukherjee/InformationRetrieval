@@ -26,15 +26,14 @@
 
 .search{
   border: none;
-  padding: 10px;
-  margin: 10px;
+  margin-top: 10px;
   height: 20px;
   width: 500px;
   border:1px solid #eaeaea;
   outline:none;
-  border-radius: 25px;
   height: 40px;
   width: 100%;
+  border-radius: 0px;
 }
 input:hover{
   border-color: #a0a0a0 #b9b9b9 #b9b9b9 #b9b9b9;
@@ -74,18 +73,15 @@ input[type="submit"]:hover {
 
 /* Style buttons */
 .custom-btn-1 {
-  /*background-color: DodgerBlue;*/ /* Blue background */
   background-color: blue;
   border: none; /* Remove borders */
   color: white; /* White text */
-  /*padding: 12px 16px;*/ /* Some padding */
   font-size: 16px; /* Set a font size */
   cursor: pointer; /* Mouse pointer on hover */
 }
 
 /* Darker background on mouse-over */
 .custom-btn-1:hover, .custom-btn-1:focus {
-  /*background-color: RoyalBlue;*/
   background-color: darkblue;
   color: white;
   border: none;
@@ -212,7 +208,6 @@ input[type="submit"]:hover {
   line-height: 2.45rem;
   text-align: center;
   pointer-events: none;
-  margin-left: 0.7rem;
   color: blue;
 }
 
@@ -232,4 +227,35 @@ input[type="submit"]:hover {
 
 .toggle-handle {
   background-color: #fff !important;
+}
+
+.list-group-item {
+  border: 0px;
+  border-left: 1px solid rgba(0,0,0,.125);
+  border-right: 1px solid rgba(0,0,0,.125);
+  margin: 0px;
+  padding: 0px 0px 0px 20px;
+}
+
+.list-group-item:last-child {
+  border-bottom: 1px solid rgba(0,0,0,.125);
+  border-radius: 0px;
+}
+
+.list-group-item:first-child {
+  border-radius: 0px;
+}
+
+.list-group-item:hover {
+  cursor: default;
+}
+
+input[type="text"]:focus{
+  border-color: rgba(0,0,0,.125);
+  box-shadow: none;
+  outline: none;
+}
+
+.active-suggestion {
+  background-color: rgba(0,0,0,.125);
 }

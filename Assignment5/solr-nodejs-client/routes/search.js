@@ -30,5 +30,21 @@ module.exports = function(conf) {
       }
     })
   });
+
+  router.get('/suggest', function(req, res, next) {
+
+    const url = conf.get('SOLR_PROTOCOL') + "://" + conf.get('SOLR_HOST') + ':' +
+        conf.get('SOLR_PORT') + '/solr/' + conf.get("SOLR_CORE_NAME") + '/suggest';
+    const query = req.query.query;
+    let qs = {q:query};
+    request({uri: url, method: 'GET', qs: qs}, function(error, response, body){
+      if(error) {
+        res.status(500).send(error);
+      }
+      else {
+        res.status(response.statusCode).send(body);
+      }
+    })
+  });
   return router;
 };

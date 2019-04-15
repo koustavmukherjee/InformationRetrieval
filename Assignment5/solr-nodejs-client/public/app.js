@@ -14,6 +14,7 @@ searchApp.controller('main',function($scope, $http, initializationData){
   $scope.page_rank_search_results = {};
   $scope.toastMessage = '';
 
+
   $scope.overlaps = 0;
   let overlap_lucene = {};
   let overlap_page_rank = {};
@@ -38,6 +39,9 @@ searchApp.controller('main',function($scope, $http, initializationData){
   $scope.urls_table = [];
   $scope.display_type = {};
   $scope.display_type.value = true;
+
+  $scope.suggestions = [];
+  $scope.activeSuggestionIndex = -1;
 
   let colors = ['#0000FF', '#00FF00', '#FFFF00', '#FF00FF',
                 '#00FFFF', '#800000', '#FF0000', '#008080',
@@ -93,14 +97,61 @@ searchApp.controller('main',function($scope, $http, initializationData){
     $scope.total_page_rank_results = 0;
     $scope.toastMessage = '';
     $scope.urls_table = [];
+    $scope.suggestions = [];
+    $scope.activeSuggestionIndex = -1;
+  };
+
+  $scope.activateSuggestionIndex = function(index) {
+    $scope.activeSuggestionIndex = index;
   };
 
   $scope.onKeyPress = function($event) {
     let keyCode = $event.which;
     if (keyCode === 13) {
+      if($scope.activeSuggestionIndex > -1)
+        $scope.search_query = $scope.suggestions[$scope.activeSuggestionIndex].term.split('_').join(' ');
       $scope.clear();
       $scope.search(true);
       $scope.search(false);
+    }
+    else if (keyCode === 38) {
+      if($scope.suggestions.length > 0) {
+        if($scope.activeSuggestionIndex <= 0)
+          $scope.activeSuggestionIndex = $scope.suggestions.length;
+        $scope.activeSuggestionIndex--;
+        $scope.activeSuggestionIndex %= $scope.suggestions.length;
+      }
+    }
+    else if(keyCode === 40) {
+      if($scope.suggestions.length > 0) {
+        $scope.activeSuggestionIndex++;
+        $scope.activeSuggestionIndex %= $scope.suggestions.length;
+      }
+    }
+    else {
+      let params = {};
+      params.query = $scope.search_query;
+      $http({
+        url: '/solr/suggest',
+        method: 'GET',
+        params: params
+      }).then(function success(response) {
+        try {
+          let suggestions = response.data.suggest.suggest[params.query];
+          if(suggestions.hasOwnProperty('suggestions')) {
+            $scope.suggestions = suggestions.suggestions;
+            $scope.activeSuggestionIndex = -1;
+          }
+        }
+        catch(e) {
+          console.error(e);
+          $scope.toastMessage = e.name + ': ' + e.message;
+          $('.toast').toast('show');
+        }
+      }, function error(response) {
+        $scope.toastMessage = response.data.error.msg;
+        $('.toast').toast('show');
+      });
     }
   };
   let clearUrlsTable = function(arr, key) {
