@@ -7,13 +7,17 @@
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
+    "csvtojson": "^2.0.8",
     "debug": "~2.6.9",
     "express": "~4.16.0",
     "morgan": "~1.9.0",
-    "request": "^2.88.0",
-    "nodemon": "^1.18.10",
     "nconf": "^0.10.0",
-    "csvtojson": "^2.0.8",
-    "spell": "^1.0.0"
+    "nodemon": "^1.18.10",
+    "request": "^2.88.0",
+    "sentence-tokenizer": "^1.0.1",
+    "spell": "^1.0.0",
+    "q": "^1.5.1",
+    "keyword-highlighter": "^1.0.6",
+    "fuzzy-search": "^3.0.1"
   }
 }

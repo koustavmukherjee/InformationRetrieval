@@ -1,7 +1,7 @@
 'use strict';
 
 // Declare app level module which depends on views, and core components
-let searchApp = angular.module('searchApp', []);
+let searchApp = angular.module('searchApp', ['ngSanitize']);
 
 searchApp.config(['$locationProvider', function($locationProvider) {
   $locationProvider.hashPrefix('!');
@@ -22,11 +22,13 @@ searchApp.controller('main',function($scope, $http, initializationData){
   $scope.lucene_start = 0;
   $scope.lucene_rows = 10;
   $scope.lucene_search_term = undefined;
+  $scope.lucene_corrected_search_term = undefined;
   $scope.total_lucene_results = 0;
 
   $scope.page_rank_start = 0;
   $scope.page_rank_rows = 10;
   $scope.page_rank_search_term = undefined;
+  $scope.page_rank_corrected_search_term = undefined;
   $scope.total_page_rank_results = 0;
 
   $scope.undefined = undefined;
@@ -89,11 +91,13 @@ searchApp.controller('main',function($scope, $http, initializationData){
     $scope.lucene_start = 0;
     $scope.lucene_rows = 10;
     $scope.lucene_search_term = undefined;
+    $scope.lucene_corrected_search_term = undefined;
     $scope.total_lucene_results = 0;
 
     $scope.page_rank_start = 0;
     $scope.page_rank_rows = 10;
     $scope.page_rank_search_term = undefined;
+    $scope.page_rank_corrected_search_term = undefined;
     $scope.total_page_rank_results = 0;
     $scope.toastMessage = '';
     $scope.urls_table = [];
@@ -105,14 +109,18 @@ searchApp.controller('main',function($scope, $http, initializationData){
     $scope.activeSuggestionIndex = index;
   };
 
+  $scope.onEnterPressed = function() {
+    $scope.clear();
+    $scope.search(true);
+    $scope.search(false);
+  };
+
   $scope.onKeyPress = function($event) {
     let keyCode = $event.which;
     if (keyCode === 13) {
       if($scope.activeSuggestionIndex > -1)
         $scope.search_query = $scope.suggestions[$scope.activeSuggestionIndex].term.split('_').join(' ');
-      $scope.clear();
-      $scope.search(true);
-      $scope.search(false);
+      $scope.onEnterPressed();
     }
     else if (keyCode === 38) {
       if($scope.suggestions.length > 0) {
@@ -223,12 +231,14 @@ searchApp.controller('main',function($scope, $http, initializationData){
             $scope.total_lucene_results = response.data.response.numFound;
             $scope.lucene_start = response.data.response.start;
             $scope.lucene_rows = response.data.response.docs.length;
+            $scope.lucene_corrected_search_term = response.data.response.corrected_spell;
           }
           else {
             $scope.page_rank_search_results = resultsObj;
             $scope.total_page_rank_results = response.data.response.numFound;
             $scope.page_rank_start = response.data.response.start;
             $scope.page_rank_rows = response.data.response.docs.length;
+            $scope.page_rank_corrected_search_term = response.data.response.corrected_spell;
           }
         } catch(e) {
           console.error(e);

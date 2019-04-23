@@ -259,3 +259,13 @@ input[type="text"]:focus{
 .active-suggestion {
   background-color: rgba(0,0,0,.125);
 }
+
+.spell {
+  color: blue;
+}
+
+.spell:hover {
+  color: darkblue;
+  text-decoration: underline;
+  cursor: pointer;
+}

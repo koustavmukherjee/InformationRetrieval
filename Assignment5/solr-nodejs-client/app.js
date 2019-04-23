@@ -7,7 +7,6 @@ const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const searchRouter = require('./routes/search');
 const dataRouter = require('./routes/data');
-const spellCheckRouter = require('./routes/spellcheck');
 
 const app = express();
 const n_conf = require('nconf');
@@ -41,16 +40,5 @@ csv()
         }
         app.use('/data', dataRouter(csvToHtml));
     });
-
-
-/*fs.readFile("dict/big.txt", "utf8", function(err, data) {
-    if(!err) {
-        dict.load(data);
-        app.use('/spellcheck', spellCheckRouter(dict));
-    }
-    else {
-        console.log(err);
-    }
-});*/
 
 module.exports = app;

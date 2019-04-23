@@ -96,6 +96,19 @@
               </span>
             </div>
           </div>
+          <div class="row">
+            <div class="col-sm-12 limit-text">
+              <span class="overlap-label"
+                    style="display: none"
+                    ng-show="lucene_corrected_search_term !== undefined"
+                    ng-class="{'display': lucene_corrected_search_term !== undefined, 'nodisplay': lucene_corrected_search_term == undefined}">
+                Did you mean: <span class="spell"
+                                    ng-click="search_query=lucene_corrected_search_term; onEnterPressed()">
+                                    {{lucene_corrected_search_term}}
+                              </span>
+              </span>
+            </div>
+          </div>
           <div class="row" ng-show="display_type.value">
             <div class="col-sm-12">
               <results-table results="lucene_search_results" overlaps="overlaps" algo-desc="LUCENE BASED"></results-table>
@@ -137,6 +150,19 @@
               </span>
             </div>
           </div>
+          <div class="row">
+            <div class="col-sm-12 limit-text">
+              <span class="overlap-label"
+                    style="display: none"
+                    ng-show="page_rank_corrected_search_term !== undefined"
+                    ng-class="{'display': page_rank_corrected_search_term !== undefined, 'nodisplay': page_rank_corrected_search_term == undefined}">
+                Did you mean: <span class="spell"
+                                    ng-click="search_query=page_rank_corrected_search_term; onEnterPressed()">
+                                {{page_rank_corrected_search_term}}
+                              </span>
+              </span>
+            </div>
+          </div>
           <div class="row" ng-show="display_type.value">
             <div class="col-sm-12">
               <results-table results="page_rank_search_results" overlaps="overlaps" algo-desc="PAGE RANK BASED"></results-table>
@@ -162,6 +188,7 @@
   <script src="/lib/js/bootstrap.min.js"></script>
   <script src="/lib/js/bootstrap4-toggle.min.js"></script>
   <script src="/lib/js/angular.min.js"></script>
+  <script src="/lib/js/angular-sanitize.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
