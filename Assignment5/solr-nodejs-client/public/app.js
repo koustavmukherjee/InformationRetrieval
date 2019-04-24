@@ -138,7 +138,9 @@ searchApp.controller('main',function($scope, $http, initializationData){
     }
     else {
       let params = {};
-      params.query = $scope.search_query;
+      let words = $scope.search_query.split(' ');
+      let last_word = words[words.length - 1];
+      params.query = last_word;
       $http({
         url: '/solr/suggest',
         method: 'GET',
@@ -147,6 +149,12 @@ searchApp.controller('main',function($scope, $http, initializationData){
         try {
           let suggestions = response.data.suggest.suggest[params.query];
           if(suggestions.hasOwnProperty('suggestions')) {
+            var suggestion_list = suggestions.suggestions;
+            for(let i = 0; i < suggestions.suggestions.length; i++) {
+              let prev_terms = words.slice(0, words.length - 1).join(' ');
+              prev_terms = prev_terms ? prev_terms + ' ' : '';
+              suggestions.suggestions[i].term = prev_terms + suggestions.suggestions[i].term;
+            }
             $scope.suggestions = suggestions.suggestions;
             $scope.activeSuggestionIndex = -1;
           }
