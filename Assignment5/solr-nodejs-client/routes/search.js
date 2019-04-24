@@ -32,7 +32,7 @@ module.exports = function(conf) {
         let docs = body.response.docs;
         for(let i = 0; i < docs.length; i++) {
             let id = docs[i].id.split("/").pop();
-            let snippet_text = snippet.generateSnippet(conf.get('SNIPPET_DATA_FILES'), id, query);
+            let snippet_text = snippet.generateSnippetUsingRegex(conf.get('SNIPPET_DATA_FILES'), id, query);
             body.response.docs[i].snippet = snippet_text;
         }
         let corrected_spell = spell.getCorrectedPhrase(query);

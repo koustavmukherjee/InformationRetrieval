@@ -27,9 +27,11 @@
                     <div class="break-words id">
                         {{isArray(value.data.id) ? value.data.id[0] : value.data.id}}
                     </div>
+                    <!--
                     <div class="break-words description">
                         {{value.data.description ? (isArray(value.data.description) ? value.data.description[0] : value.data.description) : 'N/A'}}
                     </div>
+                    -->
                     <div class="break-words description" ng-bind-html="value.data.snippet">
 
                     </div>

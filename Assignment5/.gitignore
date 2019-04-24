@@ -4,3 +4,4 @@
 .project
 solr-nodejs-client/.idea/
 solr-nodejs-client/node_modules/
+solr-nodejs-client/dict/

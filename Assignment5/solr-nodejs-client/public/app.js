@@ -140,7 +140,7 @@ searchApp.controller('main',function($scope, $http, initializationData){
       let params = {};
       let words = $scope.search_query.split(' ');
       let last_word = words[words.length - 1];
-      params.query = last_word;
+      params.query = last_word.toLowerCase();
       $http({
         url: '/solr/suggest',
         method: 'GET',
