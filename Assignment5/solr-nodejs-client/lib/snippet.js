@@ -81,7 +81,7 @@ const generateSnippetUsingRegex = function(filepath, id, term) {
     if(result)
         return highlighter(term, result);
     else
-        return undefined;
+        return 'NA';
 };
 
 module.exports = {
