@@ -62,6 +62,16 @@ const generateSnippetUsingRegex = function(filepath, id, term) {
         let sentence = sentences[i].trim();
         if(result.length > 160)
             break;
+        if(sentence.toLowerCase().includes(term) && (result.length + sentence.length <= 160)) {
+            result += sentence[sentence.length - 1] == "." ? sentence + ' ' : sentence + '. ';
+            sentences.splice(i, 1);
+        }
+    }
+
+    for(let i = 0; i < sentences.length; i++) {
+        let sentence = sentences[i].trim();
+        if(result.length > 160)
+            break;
         if(sentence.toLowerCase().match(regex_all) && (result.length + sentence.length <= 160)) {
             result += sentence[sentence.length - 1] == "." ? sentence + ' ' : sentence + '. ';
             sentences.splice(i, 1);
